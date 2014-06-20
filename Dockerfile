@@ -26,11 +26,29 @@ RUN apt-get install -y libpng-dev
 RUN apt-get install -y libtiff-dev
 RUN apt-get install -y libjasper-dev
 RUN apt-get install -y libdc1394-22-dev
-RUN apt-get install -y clang
 
 
 # tools to checkout and prepare OpenCV package
 RUN apt-get install -y git-core
+
+# LLVM
+RUN apt-get install -y clang
+RUN apt-get install -y llvm
+
+
+# OpenCV sources
+RUN mkdir -p /opencv/src
+RUN git clone --depth=1 --branch 2.4.9 https://github.com/Itseez/opencv.git /opencv/src
+
+
+# emscripten
+RUN apt-get install -y emscripten
+
+# cmake init for OpenCV
+RUN mkdir -p /opencv/build
+WORKDIR /opencv/build
+RUN cmake /opencv/src
+
 
 
 
